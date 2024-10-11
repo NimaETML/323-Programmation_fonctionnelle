@@ -122,7 +122,7 @@ new Movie(9) { Title = "Le Samouraï", Genre = "Thriller", Rating = 8.1, Year = 
 new Movie(10) { Title = "Les Misérables", Genre = "Drame", Rating = 7.6, Year = 2019, LanguageOptions = new string[] {"Français"}, StreamingPlatforms = new string[] {"Netflix"} },
 new Movie(11) { Title = "Un Prophète", Genre = "Crime", Rating = 7.9, Year = 2009, LanguageOptions = new string[] {"Français", "Arabic"}, StreamingPlatforms = new string[] {"Hulu"} },
 new Movie(12) { Title = "Persepolis", Genre = "Animation", Rating = 8.0, Year = 2007, LanguageOptions = new string[] {"Français", "English"}, StreamingPlatforms = new string[] {"Amazon", "Hulu"} },
-new Movie(13) { Title = "Léon: The Professional", Genre = "Action", Rating = 8.5, Year = 1994, LanguageOptions = new string[] {"Français", "English"}, StreamingPlatforms = new string[] {"Netflix", "Amazon"} },
+new Movie(13) { Title = "Léon: The Professional", Genre = "Action", Rating = 8.5, Year = 1981, LanguageOptions = new string[] {"Français", "English"}, StreamingPlatforms = new string[] {"Netflix", "Amazon"} },
 new Movie(14) { Title = "La Règle du jeu", Genre = "Comédie", Rating = 8.0, Year = 1939, LanguageOptions = new string[] {"Français"}, StreamingPlatforms = new string[] {"Netflix", "Hulu"} },
 new Movie(15) { Title = "Le Salaire de la peur", Genre = "Thriller", Rating = 8.2, Year = 1953, LanguageOptions = new string[] {"Français", "English"}, StreamingPlatforms = new string[] {"Amazon"} },
 new Movie(16) { Title = "À bout de souffle", Genre = "Drame", Rating = 7.8, Year = 1960, LanguageOptions = new string[] {"Français", "English"}, StreamingPlatforms = new string[] {"Netflix"} },
@@ -154,6 +154,8 @@ new Movie(23) { Title = "Le Mépris", Genre = "Drame", Rating = 7.6, Year = 1963
             FilterMoviesRatingOver(frenchMovies, MOVIEMINRATING, INFOMARGIN);
 
             FilterMoviesRatingBelow(frenchMovies, MOVIEMAXRATING, INFOMARGIN);
+
+            averageYear(frenchMovies);
         }
 
         static void FiltreMoviesGenre(List<Movie> moviesList, string[] bannedGenre, int margin)
@@ -286,7 +288,7 @@ new Movie(23) { Title = "Le Mépris", Genre = "Drame", Rating = 7.6, Year = 1963
 
         static void averageLengthWord(List<string> wordList)
         {
-            int average = GetAverage(wordList);
+            int average = GetAverageString(wordList);
             List<string> averageStrings = wordList.Where(w => w.Length == average).ToList();
 
             Console.WriteLine("\nlist of words that have the average length:");
@@ -297,13 +299,38 @@ new Movie(23) { Title = "Le Mépris", Genre = "Drame", Rating = 7.6, Year = 1963
             }
         }
 
-        static int GetAverage(List<string> list)
+        static int GetAverageString(List<string> wordlist)
         {
-            List<int> listCount = list.Select(w => w.Length).ToList();
+            List<int> listCount = wordlist.Select(w => w.Length).ToList();
 
             double doubleAverage = listCount.Average();
 
             int intAverage = Convert.ToInt16(listCount.Average());
+            Console.WriteLine("\nInt average: " + intAverage + " | " + " Double average " + doubleAverage);
+            return intAverage;
+        }
+
+        static void averageYear(List<Movie> moviesList)
+        {
+            int average = GetAverageIntAndDouble(moviesList.Select(m => m.Year).ToList());
+
+            List<Movie> averageMovie = moviesList.Where(m => m.Year == average).ToList();
+
+
+            Console.WriteLine("\nlist of movies that have the average year:");
+
+            foreach (Movie movie in averageMovie)
+            {
+                Console.WriteLine(movie.Title.ToString());
+            }
+        }
+
+
+        static int GetAverageIntAndDouble(List<int> numList)
+        {
+            double doubleAverage = numList.Average();
+
+            int intAverage = Convert.ToInt16(doubleAverage);
             Console.WriteLine("\nInt average: " + intAverage + " | " + " Double average " + doubleAverage);
             return intAverage;
         }
